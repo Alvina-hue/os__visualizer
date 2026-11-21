@@ -75,9 +75,7 @@ The CPU scheduling module demonstrates two CPU scheduling algorithms:
 
 Alternatively, you can use the Live Server extension in Visual Studio Code to run the project.
 
-## Screenshots
 
-Add screenshots of the application here to demonstrate the Disk Scheduling and CPU Scheduling modules.
 
 ## Conclusion
 
