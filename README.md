@@ -1,8 +1,8 @@
-OS Scheduling Visualizer
+###OS Scheduling Visualizer###
 
 An interactive web-based application developed to demonstrate and visualize **Disk Scheduling and CPU Scheduling algorithms**. The project helps students understand how operating systems manage disk requests and CPU processes through graphical representations, step-by-step execution, and performance analysis.
 
- Project Overview
+ ##Project Overview
 
 The OS Scheduling Visualizer demonstrates different scheduling algorithms using an interactive interface. Users can enter their own inputs, execute scheduling algorithms, and observe how requests and processes are handled.
 
@@ -11,7 +11,7 @@ The project is divided into two main modules:
 - Part A – Disk Scheduling
 - Part B – CPU Scheduling
 
- Features
+ ##Features
 
  Part A – Disk Scheduling
 
@@ -23,7 +23,7 @@ The disk scheduling module demonstrates five disk scheduling algorithms:
 4. C-SCAN (Circular SCAN)
 5. LOOK
 
-Features
+##Features
 - Enter disk size and initial head position.
 - Add, remove, and clear disk requests.
 - Select the disk head movement direction.
@@ -34,14 +34,14 @@ Features
 - Navigate through execution steps using Previous and Next.
 - Use Auto Play to observe the scheduling process.
 
- Part B – CPU Scheduling
+ ##Part B – CPU Scheduling
 
 The CPU scheduling module demonstrates two CPU scheduling algorithms:
 
 1. FCFS (First Come First Serve)
 2. Round Robin (RR)
 
-Features
+##Features
 - Add processes with Process ID, Arrival Time, Burst Time, and Priority.
 - Delete processes and load sample processes.
 - Set the time quantum for Round Robin scheduling.
