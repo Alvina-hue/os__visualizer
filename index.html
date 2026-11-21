@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Scheduling Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">OS<span> VISUALIZER</span></div>
+
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="disk.html">Disk Scheduling</a>
+            <a href="cpu.html">CPU Scheduling</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            
+
+            <h1>OS Scheduling<br>
+                <span>Visualizer</span>
+            </h1>
+
+            <p class="description">
+                Explore, simulate and compare operating system
+                scheduling algorithms through interactive visualizations.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="disk.html" class="btn primary">
+                    Explore Disk Scheduling
+                </a>
+
+                <a href="cpu.html" class="btn secondary">
+                    Explore CPU Scheduling
+                </a>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Scheduling Modules</h2>
+            <p class="section-description">
+                Learn how operating systems manage disk requests
+                and CPU processes.
+            </p>
+
+            <div class="card-container">
+
+                <div class="feature-card">
+                    <div class="card-icon">💽</div>
+                    <h3>Disk Scheduling</h3>
+                    <p>
+                        Visualize disk head movement and compare
+                        five disk scheduling algorithms.
+                    </p>
+                    <ul>
+                        <li>FCFS</li>
+                        <li>SSTF</li>
+                        <li>SCAN</li>
+                        <li>C-SCAN</li>
+                        <li>LOOK</li>
+                    </ul>
+                    <a href="disk.html" class="card-link">
+                        Open Module →
+                    </a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>CPU Scheduling</h3>
+                    <p>
+                        Understand process execution using
+                        interactive Gantt charts.
+                    </p>
+                    <ul>
+                        <li>FCFS</li>
+                        <li>Round Robin</li>
+                        <li>Waiting Time</li>
+                        <li>Turnaround Time</li>
+                    </ul>
+                    <a href="cpu.html" class="card-link">
+                        Open Module →
+                    </a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="card-icon">📊</div>
+                    <h3>Performance Analysis</h3>
+                    <p>
+                        Compare scheduling performance and
+                        understand algorithm efficiency.
+                    </p>
+                    <ul>
+                        <li>Seek Time</li>
+                        <li>Average Waiting Time</li>
+                        <li>Turnaround Time</li>
+                        <li>Performance Charts</li>
+                    </ul>
+                    <a href="disk.html" class="card-link">
+                        Compare Algorithms →
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>OS Scheduling Visualizer | Operating Systems Practical</p>
+        <p>SDG 4: Quality Education | SDG 9: Industry & Innovation</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

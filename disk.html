@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disk Scheduling | OS Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">OS<span> VISUALIZER</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="disk.html" class="active">Disk Scheduling</a>
+        <a href="cpu.html">CPU Scheduling</a>
+    </nav>
+</header>
+
+<main class="disk-container">
+
+    <section class="page-heading">
+        <p class="tagline">PART A • DISK SCHEDULING</p>
+        <h1>Disk Scheduling <span>Visualizer</span></h1>
+        <p>Explore and compare disk scheduling algorithms interactively.</p>
+    </section>
+
+    <!-- DISK CONFIGURATION -->
+
+    <section class="disk-panel">
+
+        <h2>Disk Configuration</h2>
+
+        <div class="input-grid">
+
+            <div class="input-group">
+                <label for="diskSize">Disk Size (Cylinders)</label>
+                <input type="number" id="diskSize"
+                       value="200" min="1">
+            </div>
+
+            <div class="input-group">
+                <label for="headPosition">Initial Head Position</label>
+                <input type="number" id="headPosition"
+                       value="50" min="0">
+            </div>
+
+            <div class="input-group">
+                <label for="requestQueue">Request Queue</label>
+
+                <input type="text" id="requestQueue"
+                       value="82, 170, 43, 140, 24, 16, 190"
+                       readonly>
+
+                <div class="request-entry">
+                    <input type="number" id="newRequest"
+                           placeholder="Enter cylinder number">
+
+                    <button type="button" class="btn primary"
+                            onclick="addRequest()">
+                        + Add
+                    </button>
+                </div>
+
+                <div class="queue-heading">
+                    <span>Current Requests</span>
+
+                    <button type="button" class="clear-btn"
+                            onclick="clearRequests()">
+                        Clear All
+                    </button>
+                </div>
+
+                <div id="requestList" class="request-list"></div>
+            </div>
+
+            <div class="input-group">
+                <label for="direction">Direction</label>
+
+                <select id="direction">
+                    <option value="right">Right (Increasing)</option>
+                    <option value="left">Left (Decreasing)</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn primary run-btn"
+                onclick="runScheduling()">
+            Run All Algorithms
+        </button>
+
+        <p id="errorMessage" class="error-message"></p>
+
+    </section>
+
+    <!-- ALGORITHM RESULTS -->
+
+    <section class="disk-panel">
+
+        <h2>Algorithm Results</h2>
+
+        <div class="input-group algorithm-select">
+
+            <label for="algorithm">Select Algorithm</label>
+
+            <select id="algorithm" onchange="selectAlgorithm()">
+                <option value="FCFS">FCFS</option>
+                <option value="SSTF">SSTF</option>
+                <option value="SCAN">SCAN</option>
+                <option value="C-SCAN">C-SCAN</option>
+                <option value="LOOK">LOOK</option>
+            </select>
+
+        </div>
+
+        <div class="result-grid">
+
+            <div class="result-card">
+                <p>Service Sequence</p>
+                <h3 id="serviceSequence">-</h3>
+            </div>
+
+            <div class="result-card">
+                <p>Total Head Movement</p>
+                <h3 id="totalMovement">-</h3>
+                <span>Cylinders</span>
+            </div>
+
+            <div class="result-card">
+                <p>Requests Completed</p>
+                <h3 id="completedRequests">-</h3>
+            </div>
+
+        </div>
+
+        <h3 class="subheading">Disk Seek Graph</h3>
+
+        <div class="graph-container">
+
+            <svg id="seekGraph" viewBox="0 0 800 340"
+                 role="img"
+                 aria-label="Disk head movement graph">
+
+                <text x="400" y="170"
+                      text-anchor="middle"
+                      fill="#94a3b8">
+                    Run the algorithm to view the seek graph
+                </text>
+
+            </svg>
+
+        </div>
+
+        <p id="stepInfo" class="step-info">
+            Click Run All Algorithms to begin.
+        </p>
+
+        <div class="control-buttons">
+
+            <button class="btn secondary"
+                    onclick="previousStep()">
+                ← Previous
+            </button>
+
+            <button class="btn primary"
+                    onclick="nextStep()">
+                Next →
+            </button>
+
+            <button class="btn secondary"
+                    id="playButton"
+                    onclick="toggleAutoPlay()">
+                ▶ Auto Play
+            </button>
+
+            <button class="btn secondary"
+                    onclick="resetSteps()">
+                ↻ Reset
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- PERFORMANCE COMPARISON -->
+
+    <section class="disk-panel">
+
+        <h2>Performance Comparison</h2>
+
+        <p class="section-description">
+            Compare the total head movement of all five algorithms
+            using the same input.
+        </p>
+
+        <div id="comparisonChart" class="comparison-chart">
+
+            <p>Run the algorithms to view the comparison.</p>
+
+        </div>
+
+        <div id="comparisonSummary"></div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>OS Scheduling Visualizer | Operating Systems Practical</p>
+    <p>SDG 4: Quality Education | SDG 9: Industry & Innovation</p>
+</footer>
+
+<script src="disk.js"></script>
+
+</body>
+</html>

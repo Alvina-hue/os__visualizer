@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling | OS Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">OS<span> VISUALIZER</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="disk.html">Disk Scheduling</a>
+        <a href="cpu.html" class="active">CPU Scheduling</a>
+    </nav>
+</header>
+
+<main class="cpu-container">
+
+    <section class="page-heading">
+        <p class="tagline">PART B • CPU SCHEDULING</p>
+        <h1>CPU Scheduling <span>Visualizer</span></h1>
+        <p>
+            Visualize process execution and understand CPU
+            scheduling algorithms interactively.
+        </p>
+    </section>
+
+    <!-- PROCESS CONFIGURATION -->
+
+    <section class="cpu-panel">
+
+        <h2>Process Configuration</h2>
+
+        <div class="process-input-grid">
+
+            <div class="input-group">
+                <label for="processId">Process ID</label>
+                <input type="text" id="processId"
+                       placeholder="Example: P5">
+            </div>
+
+            <div class="input-group">
+                <label for="arrivalTime">Arrival Time</label>
+                <input type="number" id="arrivalTime"
+                       min="0" placeholder="0">
+            </div>
+
+            <div class="input-group">
+                <label for="burstTime">Burst Time</label>
+                <input type="number" id="burstTime"
+                       min="1" placeholder="5">
+            </div>
+
+            <div class="input-group">
+                <label for="priority">Priority</label>
+                <input type="number" id="priority"
+                       min="1" value="1">
+            </div>
+
+        </div>
+
+        <div class="cpu-buttons">
+
+            <button class="btn primary"
+                    onclick="addProcess()">
+                + Add Process
+            </button>
+
+            <button class="btn secondary"
+                    onclick="loadSampleProcesses()">
+                Load Sample
+            </button>
+
+            <button class="btn secondary"
+                    onclick="clearProcesses()">
+                Clear All
+            </button>
+
+        </div>
+
+        <p id="cpuError" class="error-message"></p>
+
+        <h3 class="subheading">Process Table</h3>
+
+        <div class="table-wrapper">
+
+            <table class="process-table">
+
+                <thead>
+                    <tr>
+                        <th>Process ID</th>
+                        <th>Arrival Time</th>
+                        <th>Burst Time</th>
+                        <th>Priority</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="processTableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- SCHEDULING CONFIGURATION -->
+
+    <section class="cpu-panel">
+
+        <h2>Scheduling Configuration</h2>
+
+        <div class="input-grid">
+
+            <div class="input-group">
+
+                <label for="cpuAlgorithm">
+                    Scheduling Algorithm
+                </label>
+
+                <select id="cpuAlgorithm"
+                        onchange="updateQuantumVisibility()">
+
+                    <option value="FCFS">FCFS</option>
+                    <option value="RR">Round Robin</option>
+
+                </select>
+
+            </div>
+
+            <div class="input-group" id="quantumGroup">
+
+                <label for="timeQuantum">
+                    Time Quantum
+                </label>
+
+                <input type="number" id="timeQuantum"
+                       min="1" value="2">
+
+            </div>
+
+        </div>
+
+        <button class="btn primary run-btn"
+                onclick="runCPUScheduling()">
+            Run CPU Scheduling
+        </button>
+
+    </section>
+
+    <!-- GANTT CHART -->
+
+    <section class="cpu-panel">
+
+        <h2>CPU Execution Gantt Chart</h2>
+
+        <p class="section-description">
+            Follow the execution order of processes over time.
+        </p>
+
+        <div class="gantt-container">
+
+            <div id="ganttChart" class="gantt-chart">
+                <p>Run scheduling to view the Gantt chart.</p>
+            </div>
+
+            <div id="ganttTimeline" class="gantt-timeline"></div>
+
+        </div>
+
+        <p id="cpuStepInfo" class="step-info">
+            Waiting for scheduling...
+        </p>
+
+        <div class="control-buttons">
+
+            <button class="btn secondary"
+                    onclick="previousCPUStep()">
+                ← Previous
+            </button>
+
+            <button class="btn primary"
+                    onclick="nextCPUStep()">
+                Next →
+            </button>
+
+            <button class="btn secondary"
+                    id="cpuPlayButton"
+                    onclick="toggleCPUPlay()">
+                ▶ Auto Play
+            </button>
+
+            <button class="btn secondary"
+                    onclick="resetCPUSteps()">
+                ↻ Reset
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- LIVE READY QUEUE -->
+
+    <section class="cpu-panel ready-queue-panel">
+
+        <div class="ready-heading">
+
+            <div>
+                <h2>Live Ready Queue</h2>
+
+                <p class="section-description">
+                    Watch processes move between the ready queue,
+                    CPU and completed state.
+                </p>
+            </div>
+
+            <span id="queueClock" class="queue-clock">
+                Time: -
+            </span>
+
+        </div>
+
+        <div class="queue-status-grid">
+
+            <!-- RUNNING PROCESS -->
+
+            <div class="queue-lane cpu-lane">
+
+                <div class="queue-lane-title">
+                    <span class="status-dot running-dot"></span>
+                    CPU – Running
+                </div>
+
+                <div id="runningProcess" class="queue-items">
+                    <span class="queue-empty">
+                        No process running
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- READY QUEUE -->
+
+            <div class="queue-lane ready-lane">
+
+                <div class="queue-lane-title">
+
+                    <span class="status-dot ready-dot"></span>
+
+                    Ready Queue
+
+                    <span id="readyCount" class="queue-count">
+                        0
+                    </span>
+
+                </div>
+
+                <div id="readyQueueItems" class="queue-items">
+                    <span class="queue-empty">
+                        Queue is empty
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- COMPLETED PROCESSES -->
+
+            <div class="queue-lane completed-lane">
+
+                <div class="queue-lane-title">
+                    <span class="status-dot completed-dot"></span>
+                    Completed
+                </div>
+
+                <div id="completedQueueItems" class="queue-items">
+                    <span class="queue-empty">
+                        No completed processes
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <p id="readyQueueExplanation" class="queue-explanation">
+            Run scheduling, then use Next or Auto Play to see
+            the queue change.
+        </p>
+
+    </section>
+
+    <!-- PERFORMANCE METRICS -->
+
+    <section class="cpu-panel">
+
+        <h2>Process Performance Metrics</h2>
+
+        <div class="table-wrapper">
+
+            <table class="process-table">
+
+                <thead>
+                    <tr>
+                        <th>Process</th>
+                        <th>Arrival</th>
+                        <th>Burst</th>
+                        <th>Completion</th>
+                        <th>Turnaround</th>
+                        <th>Waiting</th>
+                    </tr>
+                </thead>
+
+                <tbody id="metricsTableBody">
+
+                    <tr>
+                        <td colspan="6">
+                            Run scheduling to view metrics.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="average-grid">
+
+            <div class="result-card">
+                <p>Average Waiting Time</p>
+                <h3 id="avgWaiting">-</h3>
+            </div>
+
+            <div class="result-card">
+                <p>Average Turnaround Time</p>
+                <h3 id="avgTurnaround">-</h3>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>OS Scheduling Visualizer | Operating Systems Practical</p>
+    <p>SDG 4: Quality Education | SDG 9: Industry & Innovation</p>
+</footer>
+
+<script src="cpu.js"></script>
+
+</body>
+</html>
